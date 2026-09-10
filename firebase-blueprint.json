@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Represents a user profile in the application.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "passwordHash": {
+          "type": "string",
+          "description": "SHA-256 hashed password"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "Full name of the user"
+        },
+        "profileBio": {
+          "type": "string",
+          "description": "Short bio description"
+        },
+        "securityQuestion": {
+          "type": "string",
+          "description": "Security question for reset password"
+        },
+        "securityAnswerHash": {
+          "type": "string",
+          "description": "SHA-256 hash of the lowercased security answer"
+        },
+        "failedLoginAttempts": {
+          "type": "number",
+          "description": "Count of consecutive failed login attempts"
+        },
+        "lockoutUntil": {
+          "type": "number",
+          "description": "Epoch millisecond timestamp indicating lockout expiration"
+        }
+      },
+      "required": ["email", "passwordHash"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "A system security activity log event.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique log entry ID"
+        },
+        "email": {
+          "type": "string",
+          "description": "User email context of the activity"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO-8601 string representation of transaction time"
+        },
+        "action": {
+          "type": "string",
+          "description": "The category of security operation executed"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["SUCCESS", "FAILED"],
+          "description": "Status result"
+        },
+        "details": {
+          "type": "string",
+          "description": "Description of event details"
+        },
+        "ip": {
+          "type": "string",
+          "description": "Remote IP address"
+        },
+        "userAgent": {
+          "type": "string",
+          "description": "HTTP client user agent"
+        }
+      },
+      "required": ["id", "email", "timestamp", "action", "status", "details", "ip", "userAgent"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": "UserProfile",
+      "description": "Registered application user accounts database."
+    },
+    "audit_logs": {
+      "schema": "AuditLog",
+      "description": "Security audit logs."
+    }
+  }
+}

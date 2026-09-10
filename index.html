@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IVAN-GEOAI PRO v4.0</title>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister().then(function(boolean) {
+              if (boolean) {
+                console.log('Unregistered stale service worker.');
+              }
+            });
+          }
+        });
+      }
+    </script>
+
+  </head>
+  <body class="bg-neutral-950 text-neutral-100 antialiased min-h-screen flex flex-col">
+    <div id="root" class="flex-1 flex flex-col w-full h-full min-h-screen"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

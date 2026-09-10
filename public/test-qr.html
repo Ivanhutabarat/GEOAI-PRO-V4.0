@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>QR Test</title></head>
+<body>
+  <h1>Test QR SVG</h1>
+  <div style="width: 250px; height: 250px;" id="qr-container">
+  </div>
+  <script>
+    fetch('/api/whatsapp/qr').then(r=>r.json()).then(data => {
+       // if data.qr is a string, let's use a library to render it. Wait, I can't easily include qrcode.react here.
+       // Let's include qrcode library from cdn
+    });
+  </script>
+</body>
+</html>

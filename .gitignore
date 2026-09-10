@@ -1,0 +1,16 @@
+node_modules/
+.cache/
+.vite/
+.env*
+!.env.example
+baileys_auth_info/
+auth_info_baileys/
+.baileys_auth/
+baileys_store.json
+sessions/
+coverage/
+.DS_Store
+*.log
+
+
+

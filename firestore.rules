@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper to validate basic IDs
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Helper to validate UserProfile model structure
+    function isValidUserProfile(data) {
+      return data.email is string && data.email.size() <= 200 &&
+             data.passwordHash is string && data.passwordHash.size() <= 128;
+    }
+
+    // Helper to validate AuditLog model structure
+    function isValidAuditLog(data) {
+      return data.id is string && data.id.size() <= 128 &&
+             data.email is string && data.email.size() <= 200 &&
+             data.timestamp is string && data.timestamp.size() <= 128 &&
+             data.action is string && data.action.size() <= 128 &&
+             data.status is string && data.status.size() <= 20 &&
+             data.details is string && data.details.size() <= 2000 &&
+             data.ip is string && data.ip.size() <= 100 &&
+             data.userAgent is string && data.userAgent.size() <= 1000;
+    }
+
+    // Users Collection rules
+    match /users/{email} {
+      allow read: if true;
+      allow create, update: if isValidUserProfile(request.resource.data);
+      allow delete: if true;
+    }
+
+    // Audit Logs Collection rules
+    match /audit_logs/{logId} {
+      allow read: if true;
+      allow create, update: if isValidAuditLog(request.resource.data);
+      allow delete: if true;
+    }
+  }
+}
